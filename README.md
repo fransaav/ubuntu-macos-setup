@@ -1,3 +1,4 @@
+# ahora puedo hacer cambios
 # ubuntu-macos-setup
 
 Convierte una instalación limpia de **Ubuntu con GNOME (46–50)** en un escritorio con aspecto de macOS.
