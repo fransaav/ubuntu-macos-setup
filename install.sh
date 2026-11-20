@@ -85,7 +85,8 @@ python3 "$REPO_DIR/scripts/install_extensions.py" \
   CoverflowAltTab@palatis.blogspot.com \
   search-light@icedman.github.com \
   mediacontrols@cliffniff.github.com \
-  clipboard-history@alexsaveau.dev
+  clipboard-history@alexsaveau.dev \
+  window-title-is-back@fthx
 bash "$REPO_DIR/scripts/patch_extensions.sh"
 
 # -----------------------------------------------------------------------------
