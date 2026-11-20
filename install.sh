@@ -84,7 +84,8 @@ python3 "$REPO_DIR/scripts/install_extensions.py" \
   just-perfection-desktop@just-perfection \
   CoverflowAltTab@palatis.blogspot.com \
   search-light@icedman.github.com \
-  mediacontrols@cliffniff.github.com
+  mediacontrols@cliffniff.github.com \
+  clipboard-history@alexsaveau.dev
 bash "$REPO_DIR/scripts/patch_extensions.sh"
 
 # -----------------------------------------------------------------------------
@@ -93,12 +94,18 @@ bash "$REPO_DIR/scripts/apply_settings.sh" "$WALL"
 
 # -----------------------------------------------------------------------------
 if ! $NO_SUDO; then
-  step "8. Opcionales (Chrome, login con contraseña, huella)"
+  step "8. Opcionales (Chrome, hibernación, login con contraseña, huella)"
   read -rp "¿Instalar Google Chrome? [s/N] " a
   if [[ "$a" =~ ^[sS]$ ]]; then
     wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
     sudo apt install -y /tmp/chrome.deb && rm -f /tmp/chrome.deb
+    # Aplicar tema GTK en Chrome para botones de ventana estilo macOS
+    mkdir -p "$HOME/.config/google-chrome/Default"
+    [[ -f "$HOME/.config/google-chrome/Default/Preferences" ]] || \
+      printf '{"extensions":{"theme":{"id":"","system_theme":1}}}' > "$HOME/.config/google-chrome/Default/Preferences"
   fi
+  read -rp "¿Configurar hibernación real al cerrar la tapa (requiere Secure Boot desactivado)? [s/N] " a
+  [[ "$a" =~ ^[sS]$ ]] && sudo bash "$REPO_DIR/scripts/setup_hibernate.sh"
   read -rp "¿Desactivar inicio de sesión automático (pedir contraseña al encender)? [s/N] " a
   [[ "$a" =~ ^[sS]$ ]] && sudo sed -i 's/^AutomaticLoginEnable=true/AutomaticLoginEnable=false/' /etc/gdm3/custom.conf
   if command -v fprintd-enroll >/dev/null && fprintd-list "$USER" 2>/dev/null | grep -q "Device at"; then

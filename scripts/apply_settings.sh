@@ -31,9 +31,66 @@ g org.gnome.desktop.interface clock-format '12h'
 g org.gnome.settings-daemon.plugins.media-keys home "['<Super>e']"          # Super+E = Archivos
 g org.gnome.desktop.interface locate-pointer true                          # Ctrl = localizar puntero
 g org.gnome.shell.keybindings show-screenshot-ui "['<Super><Shift>s']"
+g org.gnome.shell.keybindings toggle-message-tray "['<Super>m']"           # libera Super+V para portapapeles
 g org.gnome.desktop.wm.keybindings switch-input-source "['XF86Keyboard']"  # libera Super+Espacio
 g org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Shift>XF86Keyboard']"
 g org.freedesktop.ibus.general.hotkey triggers "['<Control><Shift>space']"
+
+# Atajo Ctrl+Shift+Esc -> Monitor de recursos (resources o gnome-system-monitor)
+RES_CMD=""
+if command -v resources >/dev/null 2>&1; then
+  RES_CMD="resources"
+elif command -v gnome-system-monitor >/dev/null 2>&1; then
+  RES_CMD="gnome-system-monitor"
+fi
+if [[ -n "$RES_CMD" ]]; then
+  RES_PATH="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/resources/"
+  g "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$RES_PATH" name 'Monitor de recursos'
+  g "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$RES_PATH" command "$RES_CMD"
+  g "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$RES_PATH" binding '<Control><Shift>Escape'
+  python3 - "$RES_PATH" << 'PY'
+import ast, subprocess, sys
+path = sys.argv[1]
+cur = subprocess.check_output(["gsettings", "get", "org.gnome.settings-daemon.plugins.media-keys", "custom-keybindings"]).decode().strip()
+lst = ast.literal_eval(cur.replace("@as ", "")) if "[" in cur else []
+if path not in lst:
+    lst.append(path)
+    subprocess.run(["gsettings", "set", "org.gnome.settings-daemon.plugins.media-keys", "custom-keybindings", str(lst)], check=False)
+PY
+fi
+
+# --- Energía (si la hibernación al cerrar tapa ya fue configurada) ---
+if [[ -f /etc/systemd/logind.conf.d/99-lid-hibernate.conf ]]; then
+  g org.gnome.settings-daemon.plugins.power lid-close-ac-action 'hibernate'
+  g org.gnome.settings-daemon.plugins.power lid-close-battery-action 'hibernate'
+fi
+
+# --- Google Chrome / PWAs: usar tema GTK para botones de ventana estilo macOS ---
+if command -v google-chrome >/dev/null 2>&1 || [[ -d "$HOME/.config/google-chrome" ]]; then
+  if pgrep -x chrome >/dev/null 2>&1; then
+    echo "  (aviso: Chrome abierto; activa Tema -> Usar GTK en chrome://settings/appearance si aún no está activo)"
+  else
+    python3 - << 'PY'
+import glob, json, os
+base = os.path.expanduser("~/.config/google-chrome")
+prefs_files = glob.glob(os.path.join(base, "*", "Preferences"))
+if not prefs_files:
+    default_dir = os.path.join(base, "Default")
+    os.makedirs(default_dir, exist_ok=True)
+    prefs_files = [os.path.join(default_dir, "Preferences")]
+for path in prefs_files:
+    try:
+        data = json.load(open(path, "r", encoding="utf-8")) if os.path.exists(path) else {}
+    except Exception:
+        data = {}
+    theme = data.setdefault("extensions", {}).setdefault("theme", {})
+    if theme.get("system_theme") != 1:
+        theme["system_theme"] = 1
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, separators=(",", ":"))
+PY
+  fi
+fi
 
 # --- Rendimiento ---
 g org.freedesktop.Tracker3.Miner.Files index-on-battery false
@@ -59,7 +116,8 @@ want = ["user-theme@gnome-shell-extensions.gcampax.github.com",
         "places-menu@gnome-shell-extensions.gcampax.github.com",
         "blur-my-shell@aunetx", "compiz-alike-magic-lamp-effect@hermes83.github.com",
         "just-perfection-desktop@just-perfection", "CoverflowAltTab@palatis.blogspot.com",
-        "search-light@icedman.github.com", "mediacontrols@cliffniff.github.com"]
+        "search-light@icedman.github.com", "mediacontrols@cliffniff.github.com",
+        "clipboard-history@alexsaveau.dev"]
 cur = subprocess.check_output(["gsettings", "get", "org.gnome.shell", "enabled-extensions"]).decode().strip()
 exts = ast.literal_eval(cur.replace("@as ", "")) if "[" in cur else []
 exts += [e for e in want if e not in exts]
