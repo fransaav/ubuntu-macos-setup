@@ -1,0 +1,7 @@
+{
+  "uuid": "scrcpy-button@ubuntu-macos-setup",
+  "name": "scrcpy Button",
+  "description": "Botón en la barra superior con ícono de celular para abrir scrcpy (espejo Android).",
+  "shell-version": ["46", "47", "48", "49", "50"],
+  "version": 1
+}

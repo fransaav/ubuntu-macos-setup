@@ -117,7 +117,8 @@ want = ["user-theme@gnome-shell-extensions.gcampax.github.com",
         "blur-my-shell@aunetx", "compiz-alike-magic-lamp-effect@hermes83.github.com",
         "just-perfection-desktop@just-perfection", "CoverflowAltTab@palatis.blogspot.com",
         "search-light@icedman.github.com", "mediacontrols@cliffniff.github.com",
-        "clipboard-history@alexsaveau.dev", "window-title-is-back@fthx"]
+        "clipboard-history@alexsaveau.dev", "window-title-is-back@fthx",
+        "scrcpy-button@ubuntu-macos-setup"]
 cur = subprocess.check_output(["gsettings", "get", "org.gnome.shell", "enabled-extensions"]).decode().strip()
 exts = ast.literal_eval(cur.replace("@as ", "")) if "[" in cur else []
 exts += [e for e in want if e not in exts]

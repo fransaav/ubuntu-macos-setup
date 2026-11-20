@@ -87,6 +87,11 @@ python3 "$REPO_DIR/scripts/install_extensions.py" \
   mediacontrols@cliffniff.github.com \
   clipboard-history@alexsaveau.dev \
   window-title-is-back@fthx
+# Instalar extensiones locales incluidas en el repositorio
+for d in "$REPO_DIR"/extensions/*; do
+  [[ -d "$d" ]] || continue
+  cp -r "$d" "$EXT_DIR/"
+done
 bash "$REPO_DIR/scripts/patch_extensions.sh"
 
 # -----------------------------------------------------------------------------
@@ -95,7 +100,7 @@ bash "$REPO_DIR/scripts/apply_settings.sh" "$WALL"
 
 # -----------------------------------------------------------------------------
 if ! $NO_SUDO; then
-  step "8. Opcionales (Chrome, hibernación, login con contraseña, huella)"
+  step "8. Opcionales (Chrome, scrcpy, hibernación, Howdy, login, huella)"
   read -rp "¿Instalar Google Chrome? [s/N] " a
   if [[ "$a" =~ ^[sS]$ ]]; then
     wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
@@ -105,8 +110,12 @@ if ! $NO_SUDO; then
     [[ -f "$HOME/.config/google-chrome/Default/Preferences" ]] || \
       printf '{"extensions":{"theme":{"id":"","system_theme":1}}}' > "$HOME/.config/google-chrome/Default/Preferences"
   fi
+  read -rp "¿Instalar scrcpy y adb (control espejo de Android desde la PC)? [s/N] " a
+  [[ "$a" =~ ^[sS]$ ]] && sudo apt install -y scrcpy adb
   read -rp "¿Configurar hibernación real al cerrar la tapa (requiere Secure Boot desactivado)? [s/N] " a
   [[ "$a" =~ ^[sS]$ ]] && sudo bash "$REPO_DIR/scripts/setup_hibernate.sh"
+  read -rp "¿Instalar Howdy (desbloqueo facial con cámara IR, compila dlib)? [s/N] " a
+  [[ "$a" =~ ^[sS]$ ]] && sudo bash "$REPO_DIR/scripts/setup_howdy.sh"
   read -rp "¿Desactivar inicio de sesión automático (pedir contraseña al encender)? [s/N] " a
   [[ "$a" =~ ^[sS]$ ]] && sudo sed -i 's/^AutomaticLoginEnable=true/AutomaticLoginEnable=false/' /etc/gdm3/custom.conf
   if command -v fprintd-enroll >/dev/null && fprintd-list "$USER" 2>/dev/null | grep -q "Device at"; then
