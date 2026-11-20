@@ -134,9 +134,14 @@ HandleLidSwitchExternalPower=hibernate
 HandleLidSwitchDocked=ignore
 EOF
 
-# 9. Configurar acción al cerrar la tapa en GNOME para el usuario actual
+# 9. Configurar acción al cerrar la tapa en GNOME y compatibilidad con Bitwarden
 if [[ -n "${SUDO_USER:-}" ]]; then
   SUDO_UID_NUM="$(id -u "$SUDO_USER")"
+  SUDO_HOME="$(getent passwd "$SUDO_USER" | cut -d: -f6)"
+  if [[ -n "$SUDO_HOME" ]]; then
+    sudo -u "$SUDO_USER" mkdir -p "${SUDO_HOME}/.config/environment.d"
+    sudo -u "$SUDO_USER" bash -c "printf 'SECURE_KEY_CONTAINER_BACKEND=mlock\n' > '${SUDO_HOME}/.config/environment.d/60-bitwarden.conf'"
+  fi
   if [[ -S "/run/user/${SUDO_UID_NUM}/bus" ]]; then
     sudo -u "$SUDO_USER" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/${SUDO_UID_NUM}/bus" \
       gsettings set org.gnome.settings-daemon.plugins.power lid-close-ac-action 'hibernate' 2>/dev/null || true

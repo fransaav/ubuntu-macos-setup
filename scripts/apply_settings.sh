@@ -63,6 +63,9 @@ fi
 if [[ -f /etc/systemd/logind.conf.d/99-lid-hibernate.conf ]]; then
   g org.gnome.settings-daemon.plugins.power lid-close-ac-action 'hibernate'
   g org.gnome.settings-daemon.plugins.power lid-close-battery-action 'hibernate'
+  # Evita que Bitwarden (memfd_secret) bloquee la hibernación del kernel
+  mkdir -p "$HOME/.config/environment.d"
+  printf 'SECURE_KEY_CONTAINER_BACKEND=mlock\n' > "$HOME/.config/environment.d/60-bitwarden.conf"
 fi
 
 # --- Google Chrome / PWAs: usar tema GTK para botones de ventana estilo macOS ---
