@@ -1,0 +1,7 @@
+{
+  "uuid": "gdrive-indicator@ubuntu-macos-setup",
+  "name": "Google Drive Indicator",
+  "description": "Indicador de estado en la barra superior para el montaje de Google Drive con rclone.",
+  "shell-version": ["46", "47", "48", "49", "50"],
+  "version": 1
+}
