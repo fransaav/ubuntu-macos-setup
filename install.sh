@@ -86,7 +86,8 @@ python3 "$REPO_DIR/scripts/install_extensions.py" \
   search-light@icedman.github.com \
   mediacontrols@cliffniff.github.com \
   clipboard-history@alexsaveau.dev \
-  window-title-is-back@fthx
+  window-title-is-back@fthx \
+  simple-weather@romanlefler.com
 # Instalar extensiones locales incluidas en el repositorio
 for d in "$REPO_DIR"/extensions/*; do
   [[ -d "$d" ]] || continue

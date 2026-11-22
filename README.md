@@ -19,13 +19,13 @@ Usa `./install.sh --no-sudo` si no tienes permisos de administrador.
 | Área | Detalle |
 | --- | --- |
 | Tema | WhiteSur Dark (GTK3/GTK4/Libadwaita/GNOME Shell), estilo Monterey, Nautilus *glassy*, tema **GTK** en Google Chrome y PWAs para botones semáforo |
-| Panel | Logo blanco personalizado, nombre en negrita de la app en primer plano a la izquierda de *Lugares*, botón de celular (`scrcpy`) junto al portapapeles, reloj a la derecha de los indicadores, widget multimedia |
+| Panel | Logo blanco personalizado, nombre en negrita de la app en primer plano a la izquierda de *Lugares*, clima en tiempo real junto a *Lugares*, botón de celular (`scrcpy`) junto al portapapeles, reloj a la derecha de los indicadores, widget multimedia |
 | Dock | Abajo, centrado, Launchpad a la izquierda, iconos de 46 px |
 | Iconos / cursores | WhiteSur icons + WhiteSur cursors |
 | Tipografía | SF Pro Text / SF Pro Display |
 | Fondos | macOS Tahoe (4K) + colección WhiteSur (Sonoma, Ventura, Monterey) |
-| Extensiones | Blur my Shell, Magic Lamp, Just Perfection, Coverflow Alt-Tab, Search Light, Media Controls, **Clipboard History**, **Window Title Is Back**, **scrcpy Button** |
-| Atajos | `Super+Espacio` Spotlight · `Super+V` historial del portapapeles (con pegado directo) · `Ctrl+Shift+Esc` Monitor de recursos · `Super+E` Archivos · `Espacio` Quick Look · `Ctrl` localizar puntero · `Super+Shift+S` captura |
+| Extensiones | Blur my Shell, Magic Lamp, Just Perfection, Coverflow Alt-Tab, Search Light, Media Controls, **Clipboard History**, **Window Title Is Back**, **SimpleWeather**, **scrcpy Button** |
+| Atajos | `Super+Espacio` / tecla **Copilot** Spotlight · `Super+V` historial del portapapeles (con pegado directo) · `Ctrl+Shift+Esc` Monitor de recursos · `Super+E` Archivos · `Espacio` Quick Look · `Ctrl` localizar puntero · `Super+Shift+S` captura |
 | Terminal | Ptyxis con paleta *Pro* (negro) |
 | Opcionales | Google Chrome (con tema GTK), **`scrcpy` + `adb`** (espejo Android), **hibernación real al cerrar la tapa** (`setup_hibernate.sh`), **desbloqueo facial Howdy** con cámara IR (`setup_howdy.sh`), pedir contraseña al iniciar, registro de huella digital |
 
