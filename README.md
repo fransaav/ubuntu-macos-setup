@@ -18,8 +18,8 @@ Usa `./install.sh --no-sudo` si no tienes permisos de administrador.
 
 | Área | Detalle |
 | --- | --- |
-| Tema | WhiteSur Dark (GTK3/GTK4/Libadwaita/GNOME Shell), estilo Monterey, Nautilus *glassy*, tema **GTK** en Google Chrome y PWAs para botones semáforo |
-| Panel | Logo blanco personalizado, nombre en negrita de la app en primer plano a la izquierda de *Lugares*, clima en tiempo real junto a *Lugares*, botón de celular (`scrcpy`) junto al portapapeles, reloj a la derecha de los indicadores, widget multimedia |
+| Tema | GNOME Shell WhiteSur Dark + ventanas nativas Libadwaita / `Yaru-dark` con botones uniformes a la derecha (`:minimize,maximize,close`), tema **GTK** en Google Chrome y PWAs |
+| Panel | Logo blanco personalizado, nombre en negrita de la app en primer plano a la izquierda de *Lugares*, clima en tiempo real junto a *Lugares*, widget multimedia centrado, botón de celular (`scrcpy`) junto al portapapeles, porcentaje de batería y fecha/hora completa a la derecha |
 | Dock | Abajo, centrado, Launchpad a la izquierda, iconos de 46 px |
 | Iconos / cursores | WhiteSur icons + WhiteSur cursors |
 | Tipografía | SF Pro Text / SF Pro Display |

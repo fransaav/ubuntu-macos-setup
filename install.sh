@@ -29,11 +29,14 @@ if ! $NO_SUDO; then
 fi
 
 # -----------------------------------------------------------------------------
-step "2. Tema WhiteSur (GTK, GNOME Shell, Libadwaita)"
+step "2. Tema WhiteSur (GNOME Shell)"
 clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git "$SRC_DIR/WhiteSur-gtk-theme"
 ( cd "$SRC_DIR/WhiteSur-gtk-theme" && \
-  ./install.sh -c Dark -c Light -t default -m -N glassy -l --round --shell -i ubuntu )
-$NO_SUDO || ( cd "$SRC_DIR/WhiteSur-gtk-theme" && sudo ./tweaks.sh -F ) || true
+  ./install.sh -c Dark -c Light -t default -m -N glassy --round --shell -i ubuntu )
+# Limpiar overrides de GTK4/Libadwaita para mantener botones uniformes nativos (Yaru-dark / Libadwaita)
+rm -rf "$HOME/.config/gtk-4.0/gtk.css" "$HOME/.config/gtk-4.0/gtk-dark.css" \
+  "$HOME/.config/gtk-4.0/gtk-Dark.css" "$HOME/.config/gtk-4.0/gtk-Light.css" \
+  "$HOME/.config/gtk-4.0/assets" "$HOME/.config/gtk-4.0/windows-assets" "$HOME/.config/gtk-3.0/gtk.css"
 
 # Logo blanco personalizado en la esquina superior izquierda
 for d in "$HOME"/.themes/WhiteSur*/gnome-shell/assets; do

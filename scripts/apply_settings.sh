@@ -7,11 +7,12 @@ g() { gsettings set "$@" 2>/dev/null || echo "  (omitido: $1 $2)"; }
 # --- Apariencia ---
 g org.gnome.shell disable-extension-version-validation true
 g org.gnome.desktop.interface color-scheme 'prefer-dark'
-g org.gnome.desktop.interface gtk-theme 'WhiteSur-Dark'
+g org.gnome.desktop.interface gtk-theme 'Yaru-dark'
 g org.gnome.shell.extensions.user-theme name 'WhiteSur-Dark'
 g org.gnome.desktop.interface icon-theme 'WhiteSur-dark'
 g org.gnome.desktop.interface cursor-theme 'WhiteSur-cursors'
-g org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
+g org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+g org.gnome.desktop.interface show-battery-percentage true
 g org.gnome.desktop.interface font-name 'SF Pro Text 11'
 g org.gnome.desktop.interface document-font-name 'SF Pro Text 11'
 g org.gnome.desktop.wm.preferences titlebar-font 'SF Pro Display Bold 11'
